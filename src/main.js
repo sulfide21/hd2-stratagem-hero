@@ -2,10 +2,11 @@
 // No game rules live here.
 
 import { createGame, PHASE } from './game.js';
-import { loadStratagems } from './data.js';
+import { loadStratagems, saveStratagems } from './data.js';
 import { loadScores, recordScore, isHighScore } from './scores.js';
 import { attachInput } from './input.js';
 import { queryElements, render } from './render.js';
+import { fetchStratagems } from './wiki.js';
 
 const elements = queryElements();
 const ui = { scores: loadScores(), syncMessage: null, syncError: false };
@@ -86,6 +87,30 @@ function startLoop() {
 
   requestAnimationFrame(frame);
 }
+
+elements.syncButton.addEventListener('click', async () => {
+  // A sync must never be able to leave the game unplayable: on any failure we
+  // keep the dataset already in play and only report what happened.
+  elements.syncButton.disabled = true;
+  ui.syncMessage = 'Contacting helldivers.wiki.gg ...';
+  ui.syncError = false;
+  paint();
+
+  try {
+    const { records, skipped } = await fetchStratagems(fetch.bind(globalThis));
+    saveStratagems(records);
+
+    game = createGame(records);
+    ui.syncMessage = `Synced ${records.length} stratagems (${skipped.length} pages skipped)`;
+    ui.syncError = false;
+  } catch (error) {
+    ui.syncMessage = `Sync failed: ${error.message}`;
+    ui.syncError = true;
+  } finally {
+    elements.syncButton.disabled = false;
+    paint();
+  }
+});
 
 async function boot() {
   try {
