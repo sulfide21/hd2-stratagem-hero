@@ -15,7 +15,12 @@ export function parseCode(wikitext) {
   const match = CODE_RE.exec(wikitext);
   if (!match) return null;
 
-  const parts = match[1].split('|').map((p) => p.trim().toLowerCase()).filter(Boolean);
+  // No filter(Boolean) here: a dangling pipe (e.g. "up|") produces an empty
+  // token, and an empty token is not a valid direction, so it falls through
+  // to the DIRECTIONS check below and rejects the whole code — same as an
+  // unrecognized direction word would. Silently dropping empty tokens would
+  // let malformed wiki markup produce a plausible-looking but wrong code.
+  const parts = match[1].split('|').map((p) => p.trim().toLowerCase());
   if (parts.length === 0) return null;
   if (!parts.every((p) => DIRECTIONS.has(p))) return null;
 

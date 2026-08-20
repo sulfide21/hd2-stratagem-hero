@@ -3,15 +3,19 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { parseCode, parseCategory, parseIconFile, parseStratagem, buildDataset } from '../src/wiki.js';
 
+// machine-gun.txt: MG-43 Machine Gun page, uses the underscore template spelling.
+// eagle-cluster-bomb.txt: Eagle Cluster Bomb page, chosen because it uses the
+// space-spelled {{Stratagem code|...}} template and the plain `image` field —
+// the whole reason this fixture pair exists is to cover both spellings/fields.
 const machineGun = readFileSync(new URL('./fixtures/machine-gun.txt', import.meta.url), 'utf8');
-const eagleAirstrike = readFileSync(new URL('./fixtures/eagle-airstrike.txt', import.meta.url), 'utf8');
+const eagleClusterBomb = readFileSync(new URL('./fixtures/eagle-cluster-bomb.txt', import.meta.url), 'utf8');
 
 test('parseCode reads the underscore template spelling', () => {
   assert.deepEqual(parseCode(machineGun), ['down', 'left', 'down', 'up', 'right']);
 });
 
 test('parseCode reads the space template spelling', () => {
-  const code = parseCode(eagleAirstrike);
+  const code = parseCode(eagleClusterBomb);
   assert.ok(Array.isArray(code), 'expected an array of directions');
   assert.ok(code.length >= 3, 'expected at least three arrows');
 });
@@ -27,6 +31,10 @@ test('parseCode returns null for a page with no code', () => {
 
 test('parseCode rejects a code containing an unknown direction', () => {
   assert.equal(parseCode('{{Stratagem_code|up|sideways}}'), null);
+});
+
+test('parseCode rejects a dangling pipe instead of dropping the empty token', () => {
+  assert.equal(parseCode('{{Stratagem_code|up|}}'), null);
 });
 
 test('parseCategory reads a plain source field', () => {
@@ -51,7 +59,7 @@ test('parseIconFile finds the stratagem_image field', () => {
 });
 
 test('parseIconFile finds the plain image field', () => {
-  assert.match(parseIconFile(eagleAirstrike), /Stratagem Icon Background\.svg$/);
+  assert.match(parseIconFile(eagleClusterBomb), /Stratagem Icon Background\.svg$/);
 });
 
 test('parseIconFile ignores non-icon images', () => {
