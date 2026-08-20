@@ -8,7 +8,6 @@ import { CONFIG as DEFAULT_CONFIG } from './config.js';
 
 export const PHASE = {
   TITLE: 'TITLE',
-  ROUND_INTRO: 'ROUND_INTRO',
   PLAYING: 'PLAYING',
   ROUND_COMPLETE: 'ROUND_COMPLETE',
   GAME_OVER: 'GAME_OVER',
@@ -122,9 +121,7 @@ export function createGame(stratagems, { config = DEFAULT_CONFIG, shuffle = defa
     nextRound() {
       if (state.phase !== PHASE.ROUND_COMPLETE) return;
 
-      const carried = state.score;
       beginRound(state.round + 1);
-      state.score = carried;
     },
 
     input(direction) {

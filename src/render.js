@@ -38,9 +38,8 @@ export function queryElements() {
 }
 
 function showScreen(elements, phase) {
-  const visible = phase === PHASE.ROUND_INTRO ? PHASE.PLAYING : phase;
   for (const [key, element] of Object.entries(elements.screens)) {
-    element.hidden = key !== visible;
+    element.hidden = key !== phase;
   }
 }
 

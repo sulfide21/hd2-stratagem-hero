@@ -105,10 +105,10 @@ internally, so tests can supply a fixed order and get deterministic runs.
 ### State machine
 
 ```
-TITLE -> ROUND_INTRO -> PLAYING -> ROUND_COMPLETE -> ROUND_INTRO
-                           |                          (next round)
-                           v
-                       GAME_OVER -> HIGHSCORE_ENTRY -> TITLE
+TITLE -> PLAYING -> ROUND_COMPLETE -> PLAYING
+            |                         (next round)
+            v
+        GAME_OVER -> HIGHSCORE_ENTRY -> TITLE
 ```
 
 `PLAYING` ends in `ROUND_COMPLETE` when the round's last stratagem is entered, or in `GAME_OVER` when the timer reaches zero.
