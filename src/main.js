@@ -88,15 +88,24 @@ function startLoop() {
   requestAnimationFrame(frame);
 }
 
+// Disabled until boot() assigns `game`: the handler below reads and reassigns
+// that module-level variable, and paint() dereferences it unconditionally, so
+// a click during the pre-boot window would throw before either try or finally
+// could run and leave the button stuck disabled forever. Re-enabled at the
+// end of a successful boot().
+elements.syncButton.disabled = true;
+
 elements.syncButton.addEventListener('click', async () => {
   // A sync must never be able to leave the game unplayable: on any failure we
-  // keep the dataset already in play and only report what happened.
-  elements.syncButton.disabled = true;
-  ui.syncMessage = 'Contacting helldivers.wiki.gg ...';
-  ui.syncError = false;
-  paint();
-
+  // keep the dataset already in play and only report what happened. Everything
+  // that can throw - including paint(), which dereferences `game` - must be
+  // inside the try so finally always runs and the button is never stuck.
   try {
+    elements.syncButton.disabled = true;
+    ui.syncMessage = 'Contacting helldivers.wiki.gg ...';
+    ui.syncError = false;
+    paint();
+
     const { records, skipped } = await fetchStratagems(fetch.bind(globalThis));
     saveStratagems(records);
 
@@ -118,6 +127,7 @@ async function boot() {
     const { stratagems } = loadStratagems(bundled);
     game = createGame(stratagems);
     attachInput(onInput);
+    elements.syncButton.disabled = false;
     paint();
     startLoop();
   } catch (error) {
