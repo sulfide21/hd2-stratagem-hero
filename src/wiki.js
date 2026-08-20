@@ -72,3 +72,85 @@ export function buildDataset(pages) {
   records.sort((a, b) => a.name.localeCompare(b.name));
   return { records, skipped };
 }
+
+const API = 'https://helldivers.wiki.gg/api.php';
+const BATCH_SIZE = 50;
+
+// A dataset smaller than this means the wiki changed its templates and our
+// parser silently stopped matching. Reject the whole sync rather than ship it.
+export const MIN_STRATAGEMS = 40;
+
+function apiUrl(params) {
+  const query = new URLSearchParams({ format: 'json', formatversion: '2', origin: '*', ...params });
+  return `${API}?${query}`;
+}
+
+async function getJson(fetchImpl, params) {
+  const response = await fetchImpl(apiUrl(params));
+  if (!response.ok) throw new Error(`wiki request failed: ${response.status}`);
+  return response.json();
+}
+
+export async function fetchAllPages(fetchImpl) {
+  const pages = [];
+  let cont;
+
+  do {
+    const body = await getJson(fetchImpl, {
+      action: 'query',
+      generator: 'categorymembers',
+      gcmtitle: 'Category:Stratagems',
+      gcmtype: 'page',
+      gcmlimit: String(BATCH_SIZE),
+      prop: 'revisions',
+      rvprop: 'content',
+      rvslots: 'main',
+      ...(cont ? { gcmcontinue: cont } : {}),
+    });
+
+    for (const page of body.query?.pages ?? []) {
+      const wikitext = page.revisions?.[0]?.slots?.main?.content ?? '';
+      pages.push({ title: page.title, wikitext });
+    }
+
+    cont = body.continue?.gcmcontinue;
+  } while (cont);
+
+  return pages;
+}
+
+export async function resolveIconUrls(records, fetchImpl) {
+  const filenames = [...new Set(records.map((r) => r.icon).filter(Boolean))];
+  const urlByFile = new Map();
+
+  for (let i = 0; i < filenames.length; i += BATCH_SIZE) {
+    const slice = filenames.slice(i, i + BATCH_SIZE);
+    const body = await getJson(fetchImpl, {
+      action: 'query',
+      titles: slice.map((f) => `File:${f}`).join('|'),
+      prop: 'imageinfo',
+      iiprop: 'url',
+    });
+
+    for (const page of body.query?.pages ?? []) {
+      const url = page.imageinfo?.[0]?.url;
+      if (url) urlByFile.set(page.title.replace(/^File:/, ''), url);
+    }
+  }
+
+  return records.map((r) => ({ ...r, icon: r.icon ? urlByFile.get(r.icon) ?? null : null }));
+}
+
+export async function fetchStratagems(fetchImpl = fetch) {
+  const pages = await fetchAllPages(fetchImpl);
+  const { records, skipped } = buildDataset(pages);
+
+  if (records.length < MIN_STRATAGEMS) {
+    throw new Error(
+      `sanity gate failed: parsed only ${records.length} stratagems, expected at least ${MIN_STRATAGEMS}. ` +
+        'The wiki templates have probably changed.'
+    );
+  }
+
+  return { records: await resolveIconUrls(records, fetchImpl), skipped };
+}
