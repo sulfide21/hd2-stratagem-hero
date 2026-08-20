@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T13:20:43.093Z",
+  "updatedAt": "2026-08-20T13:27:00.059Z",
   "source": "https://helldivers.wiki.gg/wiki/Category:Stratagems",
   "stratagems": [
     {
@@ -43,7 +43,7 @@
     },
     {
       "name": "A/FLAM-40 Flame Sentry",
-      "category": "Urban Legends <small></small>",
+      "category": "Urban Legends",
       "code": [
         "down",
         "up",
@@ -67,7 +67,7 @@
     },
     {
       "name": "A/GM-17 Gas Mortar Sentry",
-      "category": "Entrenched Division <small></small>",
+      "category": "Entrenched Division",
       "code": [
         "down",
         "up",
@@ -79,7 +79,7 @@
     },
     {
       "name": "A/LAS-98 Laser Sentry",
-      "category": "Control Group <small></small>",
+      "category": "Control Group",
       "code": [
         "down",
         "up",
@@ -152,42 +152,6 @@
       "icon": "https://helldivers.wiki.gg/images/Autocannon_Stratagem_Icon_Background.svg?556cf5"
     },
     {
-      "name": "April Fools/Budget Helldiver",
-      "category": "Bridge",
-      "code": [
-        "down",
-        "down",
-        "left",
-        "right",
-        "up"
-      ],
-      "icon": null
-    },
-    {
-      "name": "April Fools/FSF-14 Sprar",
-      "category": "Super Earth Xenolaboratory",
-      "code": [
-        "down",
-        "up",
-        "up",
-        "down",
-        "down",
-        "left",
-        "left",
-        "left",
-        "right",
-        "right",
-        "up",
-        "down",
-        "left",
-        "right",
-        "up",
-        "down",
-        "right"
-      ],
-      "icon": null
-    },
-    {
       "name": "APW-1 Anti-Materiel Rifle",
       "category": "Patriotic Administration Center",
       "code": [
@@ -201,7 +165,7 @@
     },
     {
       "name": "Aquifer Drill",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "left",
         "left",
@@ -242,7 +206,7 @@
     },
     {
       "name": "AX/ARC-3 K-9",
-      "category": "Force of Law <small></small>",
+      "category": "Force of Law",
       "code": [
         "down",
         "up",
@@ -255,7 +219,7 @@
     },
     {
       "name": "AX/FLAM-75 Hot Dog",
-      "category": "Python Commandos <small></small>",
+      "category": "Python Commandos",
       "code": [
         "down",
         "up",
@@ -281,7 +245,7 @@
     },
     {
       "name": "AX/TX-13 Dog Breath",
-      "category": "Chemical Agents <small></small>",
+      "category": "Chemical Agents",
       "code": [
         "down",
         "up",
@@ -307,7 +271,7 @@
     },
     {
       "name": "B-100 Portable Hellbomb",
-      "category": "Servants of Freedom <small></small>",
+      "category": "Servants of Freedom",
       "code": [
         "down",
         "right",
@@ -319,7 +283,7 @@
     },
     {
       "name": "B/FLAM-80 Cremator",
-      "category": "Entrenched Division <small></small>",
+      "category": "Entrenched Division",
       "code": [
         "down",
         "down",
@@ -332,7 +296,7 @@
     },
     {
       "name": "B/MD C4 Pack",
-      "category": "Redacted Regiment <small></small>",
+      "category": "Redacted Regiment",
       "code": [
         "down",
         "right",
@@ -345,7 +309,7 @@
     },
     {
       "name": "Call In Super Destroyer",
-      "category": "Unknown",
+      "category": "Ship",
       "code": [
         "up",
         "up",
@@ -360,7 +324,7 @@
     },
     {
       "name": "Cargo Container",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "up",
         "up",
@@ -373,7 +337,7 @@
     },
     {
       "name": "CQC-1 One True Flag",
-      "category": "Masters of Ceremony <small></small>",
+      "category": "Masters of Ceremony",
       "code": [
         "down",
         "left",
@@ -385,7 +349,7 @@
     },
     {
       "name": "CQC-20 Breaching Hammer",
-      "category": "Siege Breakers <small></small>",
+      "category": "Siege Breakers",
       "code": [
         "down",
         "left",
@@ -397,7 +361,7 @@
     },
     {
       "name": "CQC-9 Defoliation Tool",
-      "category": "Python Commandos <small></small>",
+      "category": "Python Commandos",
       "code": [
         "down",
         "left",
@@ -409,7 +373,7 @@
     },
     {
       "name": "Dark Fluid Vessel",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "up",
         "left",
@@ -422,7 +386,7 @@
     },
     {
       "name": "E/AT-12 Anti-Tank Emplacement",
-      "category": "Urban Legends <small></small>",
+      "category": "Urban Legends",
       "code": [
         "down",
         "up",
@@ -517,7 +481,7 @@
     },
     {
       "name": "Eagle Rearm",
-      "category": "Unknown",
+      "category": "Ship",
       "code": [
         "up",
         "up",
@@ -562,7 +526,7 @@
     },
     {
       "name": "EAT-411 Leveller",
-      "category": "Siege Breakers <small></small>",
+      "category": "Siege Breakers",
       "code": [
         "down",
         "down",
@@ -574,7 +538,7 @@
     },
     {
       "name": "EAT-700 Expendable Napalm",
-      "category": "Dust Devils <small></small>",
+      "category": "Dust Devils",
       "code": [
         "down",
         "down",
@@ -614,7 +578,7 @@
     },
     {
       "name": "EXO-51 Lumberer Exosuit",
-      "category": "Exo Experts <small></small>",
+      "category": "Exo Experts",
       "code": [
         "left",
         "down",
@@ -628,7 +592,7 @@
     },
     {
       "name": "EXO-55 Breakthrough Exosuit",
-      "category": "Exo Experts <small></small>",
+      "category": "Exo Experts",
       "code": [
         "left",
         "down",
@@ -691,7 +655,7 @@
     },
     {
       "name": "GL-28 Belt-Fed Grenade Launcher",
-      "category": "Siege Breakers <small></small>",
+      "category": "Siege Breakers",
       "code": [
         "down",
         "left",
@@ -704,7 +668,7 @@
     },
     {
       "name": "GL-52 De-Escalator",
-      "category": "Force of Law <small></small>",
+      "category": "Force of Law",
       "code": [
         "down",
         "right",
@@ -728,7 +692,7 @@
     },
     {
       "name": "Hive Breaker Drill",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "left",
         "up",
@@ -765,7 +729,7 @@
     },
     {
       "name": "LIFT-182 Warp Pack",
-      "category": "Control Group <small></small>",
+      "category": "Control Group",
       "code": [
         "down",
         "left",
@@ -790,7 +754,7 @@
     },
     {
       "name": "LIFT-860 Hover Pack",
-      "category": "Borderline Justice <small></small>",
+      "category": "Borderline Justice",
       "code": [
         "down",
         "up",
@@ -803,7 +767,7 @@
     },
     {
       "name": "M-1000 Maxigun",
-      "category": "Python Commandos <small></small>",
+      "category": "Python Commandos",
       "code": [
         "down",
         "left",
@@ -939,7 +903,7 @@
     },
     {
       "name": "MGX-42 Bullet Storm",
-      "category": "Exo Experts <small></small>",
+      "category": "Exo Experts",
       "code": [
         "down",
         "left",
@@ -964,7 +928,7 @@
     },
     {
       "name": "MS-11 Solo Silo",
-      "category": "Dust Devils <small></small>",
+      "category": "Dust Devils",
       "code": [
         "down",
         "up",
@@ -976,7 +940,7 @@
     },
     {
       "name": "NUX-223 Hellbomb",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "down",
         "up",
@@ -1062,7 +1026,7 @@
     },
     {
       "name": "Orbital Illumination Flare",
-      "category": "Unknown",
+      "category": "Other",
       "code": [
         "right",
         "right",
@@ -1144,7 +1108,7 @@
     },
     {
       "name": "PLAS-45 Epoch",
-      "category": "Control Group <small></small>",
+      "category": "Control Group",
       "code": [
         "down",
         "left",
@@ -1156,7 +1120,7 @@
     },
     {
       "name": "Prospecting Drill",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "down",
         "down",
@@ -1182,7 +1146,7 @@
     },
     {
       "name": "Reinforce",
-      "category": "Unknown",
+      "category": "Ship",
       "code": [
         "up",
         "down",
@@ -1194,7 +1158,7 @@
     },
     {
       "name": "Reinforcement Pods",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "left",
         "right",
@@ -1206,7 +1170,7 @@
     },
     {
       "name": "Resupply",
-      "category": "Unknown",
+      "category": "Ship",
       "code": [
         "down",
         "down",
@@ -1242,7 +1206,7 @@
     },
     {
       "name": "S-11 Speargun",
-      "category": "Dust Devils <small></small>",
+      "category": "Dust Devils",
       "code": [
         "down",
         "right",
@@ -1255,7 +1219,7 @@
     },
     {
       "name": "SEAF Artillery",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "right",
         "up",
@@ -1266,7 +1230,7 @@
     },
     {
       "name": "Seismic Probe",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "up",
         "up",
@@ -1319,7 +1283,7 @@
     },
     {
       "name": "SH-51 Directional Shield",
-      "category": "Urban Legends <small></small>",
+      "category": "Urban Legends",
       "code": [
         "down",
         "up",
@@ -1332,7 +1296,7 @@
     },
     {
       "name": "SoS Beacon",
-      "category": "Unknown",
+      "category": "Ship",
       "code": [
         "up",
         "down",
@@ -1354,7 +1318,7 @@
     },
     {
       "name": "SSSD Delivery",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "down",
         "down",
@@ -1380,7 +1344,7 @@
     },
     {
       "name": "Super Earth Flag",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "down",
         "up",
@@ -1391,7 +1355,7 @@
     },
     {
       "name": "Tactical Video Camera",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "right",
         "down",
@@ -1421,7 +1385,7 @@
     },
     {
       "name": "Tectonic Drill",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "up",
         "down",
@@ -1434,7 +1398,7 @@
     },
     {
       "name": "TX-41 Sterilizer",
-      "category": "Chemical Agents <small></small>",
+      "category": "Chemical Agents",
       "code": [
         "down",
         "left",
@@ -1446,7 +1410,7 @@
     },
     {
       "name": "Upload Data",
-      "category": "Unknown",
+      "category": "Objective",
       "code": [
         "left",
         "right",

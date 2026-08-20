@@ -9,6 +9,7 @@ const DIRECTIONS = new Set(['up', 'down', 'left', 'right']);
 
 const CODE_RE = /\{\{Stratagem[ _]code\|([^}]+)\}\}/i;
 const SOURCE_RE = /^\s*\|?\s*source\s*=\s*(.+)$/im;
+const TYPE_RE = /^\s*\|?\s*stratagem_type\s*=\s*(.+)$/im;
 const ICON_RE = /=\s*([^=\n|]*Stratagem Icon Background\.svg)\s*$/im;
 
 export function parseCode(wikitext) {
@@ -27,19 +28,36 @@ export function parseCode(wikitext) {
   return parts;
 }
 
-export function parseCategory(wikitext) {
-  const match = SOURCE_RE.exec(wikitext);
-  if (!match) return 'Unknown';
-
-  // "[[Page#Anchor|Label]]" -> "Label";  "[[Hangar]]" -> "Hangar"
-  const cleaned = match[1]
+// "[[Page#Anchor|Label]]" -> "Label";  "[[Hangar]]" -> "Hangar"; strips stray
+// HTML (e.g. "<small></small>") and wiki markup left over in infobox fields.
+function cleanCategoryField(raw) {
+  return raw
+    .replace(/<[^>]+>/g, '')
     .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
     .replace(/\[\[([^\]]+)\]\]/g, '$1')
     .replace(/\{\{[^}]*\}\}/g, '')
     .replace(/'''?/g, '')
     .trim();
+}
 
-  return cleaned || 'Unknown';
+export function parseCategory(wikitext) {
+  // Prefer the explicit "source" field (e.g. a warbond or store name). Some
+  // pages (Aquifer Drill, Eagle Rearm, ...) have no source but do carry
+  // "stratagem_type" (e.g. "Objective", "Ship") — a real label worth showing
+  // rather than falling straight through to "Unknown".
+  const sourceMatch = SOURCE_RE.exec(wikitext);
+  if (sourceMatch) {
+    const cleaned = cleanCategoryField(sourceMatch[1]);
+    if (cleaned) return cleaned;
+  }
+
+  const typeMatch = TYPE_RE.exec(wikitext);
+  if (typeMatch) {
+    const cleaned = cleanCategoryField(typeMatch[1]);
+    if (cleaned) return cleaned;
+  }
+
+  return 'Unknown';
 }
 
 export function parseIconFile(wikitext) {
@@ -64,6 +82,15 @@ export function buildDataset(pages) {
   const skipped = [];
 
   for (const page of pages) {
+    // April Fools/* pages are joke subpages of Category:Stratagems, not real
+    // stratagems — they carry implausible codes (e.g. 17 arrows) that would
+    // be unplayable inside the game's round timer. Skip them like any other
+    // non-stratagem page rather than trying to parse them.
+    if (page.title.startsWith('April Fools/')) {
+      skipped.push(page.title);
+      continue;
+    }
+
     const record = parseStratagem(page.title, page.wikitext);
     if (record) records.push(record);
     else skipped.push(page.title);

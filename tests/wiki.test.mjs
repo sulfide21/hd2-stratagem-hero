@@ -54,6 +54,19 @@ test('parseCategory falls back to Unknown', () => {
   assert.equal(parseCategory('no source field here'), 'Unknown');
 });
 
+test('parseCategory strips HTML tags left in the source field', () => {
+  assert.equal(parseCategory('| source = Urban Legends <small></small>'), 'Urban Legends');
+});
+
+test('parseCategory prefers source over stratagem_type when both are present', () => {
+  const text = '| source = Hangar\n| stratagem_type = Objective';
+  assert.equal(parseCategory(text), 'Hangar');
+});
+
+test('parseCategory falls back to stratagem_type when source is absent', () => {
+  assert.equal(parseCategory('| stratagem_type = Objective'), 'Objective');
+});
+
 test('parseIconFile finds the stratagem_image field', () => {
   assert.match(parseIconFile(machineGun), /Stratagem Icon Background\.svg$/);
 });
@@ -88,6 +101,16 @@ test('buildDataset drops pages without codes and sorts by name', () => {
   const { records, skipped } = buildDataset(pages);
   assert.deepEqual(records.map((r) => r.name), ['Alpha', 'Zeta']);
   assert.deepEqual(skipped, ['Prose']);
+});
+
+test('buildDataset excludes April Fools joke subpages and counts them as skipped', () => {
+  const pages = [
+    { title: 'April Fools/Budget Helldiver', wikitext: '{{Stratagem_code|up|up|up}}' },
+    { title: 'Alpha', wikitext: '{{Stratagem_code|up|up}}' },
+  ];
+  const { records, skipped } = buildDataset(pages);
+  assert.deepEqual(records.map((r) => r.name), ['Alpha']);
+  assert.deepEqual(skipped, ['April Fools/Budget Helldiver']);
 });
 
 import { fetchAllPages, resolveIconUrls, fetchStratagems, MIN_STRATAGEMS } from '../src/wiki.js';
