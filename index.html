@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stratagem Hero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="cabinet">
+      <div class="scanlines" aria-hidden="true"></div>
+
+      <header class="hud">
+        <div class="hud-cell"><span class="hud-label">Round</span><span id="hud-round">1</span></div>
+        <div class="hud-cell"><span class="hud-label">Score</span><span id="hud-score">0</span></div>
+        <div class="hud-cell"><span class="hud-label">High</span><span id="hud-high">0</span></div>
+      </header>
+
+      <section id="screen-title" class="screen">
+        <h1 class="title">Stratagem Hero</h1>
+        <p class="subtitle">Enter the codes. Serve democracy.</p>
+        <p class="hint">Press <kbd>Enter</kbd> to begin</p>
+        <ol id="score-table" class="score-table"></ol>
+        <div class="sync-row">
+          <button id="sync-button" type="button" class="sync-button">Sync stratagems from wiki</button>
+          <p id="sync-status" class="sync-status" role="status"></p>
+        </div>
+      </section>
+
+      <section id="screen-playing" class="screen" hidden>
+        <div class="timer-track"><div id="timer-bar" class="timer-bar"></div></div>
+
+        <div class="stratagem">
+          <img id="stratagem-icon" class="stratagem-icon" alt="" hidden />
+          <h2 id="stratagem-name" class="stratagem-name"></h2>
+          <p id="stratagem-category" class="stratagem-category"></p>
+        </div>
+
+        <div id="arrow-row" class="arrow-row"></div>
+        <p id="queue-count" class="queue-count"></p>
+      </section>
+
+      <section id="screen-round-complete" class="screen" hidden>
+        <h2 class="banner">Round <span id="complete-round"></span> complete</h2>
+        <p id="complete-bonus" class="banner-detail"></p>
+        <p class="hint">Press <kbd>Enter</kbd> to continue</p>
+      </section>
+
+      <section id="screen-game-over" class="screen" hidden>
+        <h2 class="banner banner-fail">Game over</h2>
+        <p id="final-score" class="banner-detail"></p>
+        <form id="highscore-form" class="highscore-form" hidden>
+          <label for="highscore-name">New high score. Name:</label>
+          <input id="highscore-name" maxlength="12" autocomplete="off" />
+          <button type="submit">Submit</button>
+        </form>
+        <p class="hint">Press <kbd>Enter</kbd> for the title screen</p>
+      </section>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

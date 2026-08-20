@@ -1,0 +1,161 @@
+/* Helldivers 2 arcade treatment: Super Earth yellow on black, hard edges,
+   heavy uppercase type. Every visual here is CSS or SVG - no ripped assets. */
+
+:root {
+  --yellow: #ffe20a;
+  --yellow-dim: #8a7b06;
+  --black: #0a0a0a;
+  --panel: #141414;
+  --red: #ff3b30;
+  --text: #f5f5f5;
+  --muted: #8b8b8b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Chakra Petch', 'Segoe UI', system-ui, sans-serif;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.cabinet {
+  position: relative;
+  width: min(920px, 96vw);
+  min-height: min(640px, 92vh);
+  padding: 1.5rem;
+  background: var(--panel);
+  border: 3px solid var(--yellow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  overflow: hidden;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0 2px,
+    rgba(0, 0, 0, 0.28) 2px 4px
+  );
+  z-index: 5;
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  border-bottom: 2px solid var(--yellow-dim);
+  padding-bottom: 0.75rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+}
+
+.hud-cell { display: flex; flex-direction: column; align-items: center; }
+.hud-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.2em; }
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.screen[hidden] { display: none; }
+
+.title { margin: 0; font-size: clamp(2rem, 7vw, 4rem); color: var(--yellow); letter-spacing: 0.1em; }
+.subtitle { margin: 0; color: var(--muted); letter-spacing: 0.2em; font-size: 0.85rem; }
+.hint { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.15em; }
+
+kbd {
+  background: var(--yellow);
+  color: var(--black);
+  padding: 0.1rem 0.4rem;
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.timer-track { width: 100%; height: 14px; background: #000; border: 2px solid var(--yellow-dim); }
+.timer-bar { height: 100%; width: 100%; background: var(--yellow); transition: width 80ms linear; }
+.timer-bar.critical { background: var(--red); }
+
+.stratagem { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.stratagem-icon { width: 88px; height: 88px; background: var(--yellow); padding: 6px; }
+.stratagem-name { margin: 0; font-size: clamp(1.25rem, 4vw, 2.25rem); color: var(--yellow); }
+.stratagem-category { margin: 0; color: var(--muted); font-size: 0.75rem; letter-spacing: 0.2em; }
+
+.arrow-row { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+
+.arrow {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--yellow-dim);
+  color: var(--yellow-dim);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.arrow.done { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+
+.queue-count { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.2em; }
+
+.banner { margin: 0; font-size: clamp(1.5rem, 5vw, 3rem); color: var(--yellow); }
+.banner-fail { color: var(--red); }
+.banner-detail { color: var(--text); letter-spacing: 0.1em; }
+
+.score-table { list-style: none; margin: 1rem 0 0; padding: 0; width: min(340px, 80%); font-size: 0.85rem; }
+.score-table li { display: flex; justify-content: space-between; border-bottom: 1px solid #262626; padding: 0.2rem 0; }
+.score-table li span:last-child { color: var(--yellow); }
+
+.sync-row { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-top: 0.5rem; }
+
+.sync-button {
+  font: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: transparent;
+  color: var(--yellow);
+  border: 2px solid var(--yellow);
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+}
+
+.sync-button:hover:not(:disabled) { background: var(--yellow); color: var(--black); }
+.sync-button:disabled { opacity: 0.5; cursor: progress; }
+
+.sync-status { margin: 0; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); min-height: 1rem; }
+.sync-status.error { color: var(--red); }
+
+.highscore-form { display: flex; gap: 0.5rem; align-items: center; }
+.highscore-form[hidden] { display: none; }
+.highscore-form input { font: inherit; text-transform: uppercase; background: #000; color: var(--yellow); border: 2px solid var(--yellow); padding: 0.35rem 0.5rem; width: 8ch; }
+.highscore-form button { font: inherit; text-transform: uppercase; background: var(--yellow); color: var(--black); border: 0; padding: 0.4rem 0.9rem; cursor: pointer; }
+
+/* Error feedback: a red shake on the whole cabinet. */
+.cabinet.wrong { animation: shake 180ms ease-in-out; }
+.cabinet.wrong .arrow { border-color: var(--red); color: var(--red); }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-9px); }
+  75% { transform: translateX(9px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cabinet.wrong { animation: none; }
+  .timer-bar { transition: none; }
+}
