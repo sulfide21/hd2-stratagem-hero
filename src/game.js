@@ -120,6 +120,8 @@ export function createGame(stratagems, { config = DEFAULT_CONFIG, shuffle = defa
     },
 
     nextRound() {
+      if (state.phase !== PHASE.ROUND_COMPLETE) return;
+
       const carried = state.score;
       beginRound(state.round + 1);
       state.score = carried;
@@ -146,7 +148,13 @@ export function createGame(stratagems, { config = DEFAULT_CONFIG, shuffle = defa
 
       stratagemElapsed += deltaSeconds;
       state.timeRemaining = Math.max(0, state.timeRemaining - deltaSeconds);
-      if (state.timeRemaining === 0) state.phase = PHASE.GAME_OVER;
+      if (state.timeRemaining === 0) {
+        // The round's per-stratagem points are already earned; credit them.
+        // The round bonus is conditioned on finishing every stratagem, so it
+        // stays forfeited when the clock runs out mid-round.
+        state.score += state.roundScoreTotal;
+        state.phase = PHASE.GAME_OVER;
+      }
     },
   };
 }

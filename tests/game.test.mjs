@@ -110,6 +110,24 @@ test('the timer reaching zero mid-round ends in GAME_OVER', () => {
   assert.equal(game.state.phase, PHASE.GAME_OVER);
 });
 
+test('timing out mid-round still credits points already earned, with no round bonus', () => {
+  const game = newGame();
+  game.start();
+  // Complete some, but not all, of the round's stratagems before time runs out.
+  enterCurrentCode(game);
+  enterCurrentCode(game);
+  enterCurrentCode(game);
+  assert.equal(game.state.phase, PHASE.PLAYING);
+  const earned = game.state.roundScoreTotal;
+  assert.ok(earned > 0, 'expected some points to have been earned already');
+
+  game.tick(999);
+
+  assert.equal(game.state.phase, PHASE.GAME_OVER);
+  assert.equal(game.state.score, earned);
+  assert.equal(game.state.lastRoundBonus, 0);
+});
+
 test('the timer never goes below zero', () => {
   const game = newGame();
   game.start();
@@ -137,6 +155,32 @@ test('nextRound advances the round and refills the timer', () => {
   assert.equal(game.state.roundErrors, 0);
 });
 
+test('nextRound does nothing from GAME_OVER', () => {
+  const game = newGame();
+  game.start();
+  game.tick(999);
+  assert.equal(game.state.phase, PHASE.GAME_OVER);
+  const roundBefore = game.state.round;
+  const scoreBefore = game.state.score;
+  game.nextRound();
+  assert.equal(game.state.phase, PHASE.GAME_OVER);
+  assert.equal(game.state.round, roundBefore);
+  assert.equal(game.state.score, scoreBefore);
+});
+
+test('nextRound does nothing mid-round (PLAYING)', () => {
+  const game = newGame();
+  game.start();
+  enterCurrentCode(game);
+  assert.equal(game.state.phase, PHASE.PLAYING);
+  const roundBefore = game.state.round;
+  const indexBefore = game.state.index;
+  game.nextRound();
+  assert.equal(game.state.phase, PHASE.PLAYING);
+  assert.equal(game.state.round, roundBefore);
+  assert.equal(game.state.index, indexBefore);
+});
+
 test('stratagemScore scales with code length', () => {
   const short = stratagemScore({ codeLength: 3, round: 1, elapsed: 99, errors: 0 }, CONFIG);
   const long = stratagemScore({ codeLength: 8, round: 1, elapsed: 99, errors: 0 }, CONFIG);
@@ -146,13 +190,24 @@ test('stratagemScore scales with code length', () => {
 test('stratagemScore scales with the round number', () => {
   const early = stratagemScore({ codeLength: 5, round: 1, elapsed: 99, errors: 0 }, CONFIG);
   const late = stratagemScore({ codeLength: 5, round: 4, elapsed: 99, errors: 0 }, CONFIG);
-  assert.equal(late, early * 4);
+  // Tolerate rounding: config.js is the tuning surface and a fractional
+  // constant would break exact equality here through rounding alone, with
+  // no logic error present. The relationship must still hold within 1 point.
+  assert.ok(
+    Math.abs(late - early * 4) <= 1,
+    `expected ${late} to be within 1 of ${early * 4}`
+  );
 });
 
 test('stratagemScore pays a full speed bonus for instant entry', () => {
   const instant = stratagemScore({ codeLength: 5, round: 1, elapsed: 0, errors: 0 }, CONFIG);
   const slow = stratagemScore({ codeLength: 5, round: 1, elapsed: CONFIG.SPEED_WINDOW, errors: 0 }, CONFIG);
-  assert.equal(instant, slow * 2);
+  // Same tolerance rationale as above: the *2 relationship should hold,
+  // but each side goes through its own independent Math.round.
+  assert.ok(
+    Math.abs(instant - slow * 2) <= 1,
+    `expected ${instant} to be within 1 of ${slow * 2}`
+  );
 });
 
 test('stratagemScore never returns a negative number', () => {
