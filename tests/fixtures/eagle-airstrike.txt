@@ -1,0 +1,93 @@
+{{Tabs
+ | name1 = Helldivers 2
+ | link1 = Eagle Cluster Bomb
+ | name2 = Helldivers 1
+ | link2 = Helldivers 1:Vindicator Dive Bomb
+ }}
+ {{Last Updated|1.001.100}}
+{{Infobox Stratagem
+ | title = Eagle Cluster Bomb
+ | image = Eagle Cluster Bomb Stratagem Icon Background.svg
+ | permit_type = Offensive
+ | unlock_level = 3
+ | unlock_cost = {{Currency|Requisition|4000}}
+ | source = Hangar
+ | traits = Explosive {{*}} Eagle {{*}} Medium Armor Penetrating
+ | stratagem_code = {{Stratagem code|up|right|down|down|right}}
+ | stratagem_type = Eagle
+ | base_cooldown = 15s
+}}{{Quote|A targeted air strike unable to destroy buildings, but efficient at clearing smaller targets.|Ship Management Terminal}}
+
+The '''Eagle Cluster Bomb''' is an offensive [[Stratagems|stratagem]] that calls in a carpet bomb on the area. 
+
+== Stratagem Statistics ==
+{{Stratagem Stats Table
+| call_time = 4.1
+| uses = 4
+| uses_upgraded = 5
+| cooldown = 15
+| cooldown_upgraded = 8
+| rearm_time = 150
+| rearm_time_upgraded = 120
+}}
+
+== Detailed Weapon Statistics ==
+{{Attack Data Stratagem}}
+Each cluster bomb explodes into 8 submunitions, for a total of 64 with no upgrades. The cluster bomb airbursts to release its bomblets so the projectile itself won't hit its target.
+
+== Tactical Information ==
+* A large amount of small bombs will land in the target zone and kill most small to medium enemies in the area. 
+* The Eagle releases the bombs in a straight line, perpendicular to the direction of the stratagem beacon's towards the Helldiver's initial position from where they threw the beacon.
+** If the beacon bounces off of an object, the direction will be chosen based off where the beacon finally landed and the initial throwing location
+* The cluster bomb can completely devastate a large area. Be careful of your fellow helldivers before throwing this stratagem out.
+* Most small and medium enemies in the area will be annihilated by the bombs. Use them against large groups of small and medium targets
+* Sometimes, you'll get lucky and one of the bombs will fall into a fabricator vent or bughole, destroying it, but don't count on it.
+* Like other explosive stratagems, Eagle Cluster Bomb can destroy optional mission objectives like the [[Terminate Illegal Broadcast|Illegal Broadcast Tower]] and Spore Spewer.
+
+== Applicable Ship Modules ==
+
+The following [[Ship Modules|Ship Modules]] affect the Eagle Cluster Bomb:
+{| class="wikitable"
+|+
+! Department
+! Ship Module
+! Effect
+|-
+! rowspan="5" | Hangar
+| [[Liquid-Ventilated Cockpit]]
+| '''Eagle''' stratagem cooldown reduced by '''50%'''.
+|-
+| [[Pit Crew Hazard Pay]]
+| Reduces '''Eagle''' Rearm time by '''20%'''.
+|-
+| [[Expanded Weapons Bay]]
+| Increases the number of '''Eagle''' uses per '''Rearm''' by 1.
+|-
+| [[XXL Weapons Bay]]
+| Eagle Stratagems that drop multiple drop will drop '''1''' additional bomb(s).
+|-
+|[[Advanced Crew Training]]
+|Eagle Rearm cooldown further reduced by '''10%''' if called in while Eagle uses still remain.
+|-
+!'''Bridge'''
+|[[Morale Augmentation]]
+|Reduces cooldown time for '''all Stratagems''' by '''5%'''.
+|}
+
+== Media ==
+[[File:Eagle Cluster Bomb Preview Video.mp4|none|thumb|Tutorial Video Demonstrating Use of the Eagle Cluster Bomb]]
+
+== Change History ==
+{{Change History Head}}
+{{Change History Update|1.001.100|changes=
+Changes
+* Every Stratagem capable of damaging heavily armored enemies has had their damage increased to account for the increased health of heavier enemies.
+** Projectile standard damage increased from 500 to 1,500.
+** Projectile durable damage increased from 500 to 1,500.
+** Direct Penetration increased from {{armor|5|ap}} to {{armor|7|ap}}.
+** Slight Angle Penetration increased from {{armor|5|ap}} to {{armor|7|ap}}.
+** Large Angle Penetration increased from {{armor|5|ap}} to {{armor|7|ap}}.
+}}
+
+{{Nav Stratagem}}
+__FORCETOC__

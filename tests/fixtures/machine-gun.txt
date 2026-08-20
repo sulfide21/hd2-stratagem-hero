@@ -1,0 +1,134 @@
+{{Tabs
+ | name1 = Helldivers 2
+ | link1 = MG-43 Machine Gun
+ | name2 = Helldivers 1
+ | link2 = Helldivers 1:MG-94 Machine Gun
+}}
+{{Last Updated|1.005.000}}
+{{Infobox Support Weapon
+| title = MG-43 Machine Gun
+| stratagem_image = Machine Gun Stratagem Icon Background.svg
+| permit_type = Supply
+| unlock_level = 1
+| unlock_cost = Free
+| source = Patriotic Administration Center
+| traits = Support Weapon {{*}} Medium Armor Penetrating {{*}} Stationary Reload
+| stratagem_code = {{Stratagem_code|down|left|down|up|right}}
+| stratagem_type = Support Weapon
+| base_cooldown = 480s
+| weapon_image = MG-43 Machine Gun Support Render.png
+| damage = {{Damage|Ballistic|90}}
+| penetration = {{Armor|3|AP}}
+| capacity = 175
+| fire_rate = 630rpm {{*}} 760rpm {{*}} 900rpm
+| dps = 945{{*}}1,140.3{{*}}1,350
+| spare_mags = 3
+| firing_modes = Auto
+| weapon_category = Support Weapons
+| weapon_type = Heavy Weapons
+| supply_box_refill = 3
+| ammo_box_refill = 1
+}}
+
+{{Quote|A machine gun designed for stationary use. Trades higher power for increased recoil and reduced accuracy.|Ship Management Terminal}}
+
+The '''MG-43 Machine Gun''' is a [[Stratagem]] that calls down a [[Weapons#Support Weapons|Support Weapon]] capable of rapidly firing armor penetrating rounds.
+
+== Procurement ==
+The MG-43 Machine Gun is unlocked by default.
+
+== Stratagem Statistics ==
+{{Stratagem Stats Table
+| call_time = 7.75
+| call_time_upgraded = 4.75
+| uses = Unlimited
+| cooldown = 480
+| cooldown_upgraded = 432
+}}
+
+== Detailed Weapon Statistics ==
+{{Attack_Data_Weapon|MG-43 MACHINE GUN}}
+
+== Tactical Information == 
+* As a general-purpose machine gun, the MG-43's large magazine size and sustained {{Armor|3|AP}} penetration damage makes it excel versus crowds of small- to medium-sized enemies.
+** This makes it particularly effective versus the [[Illuminate]], given the abundance of lightly armored, high health targets.
+* The weapon has high recoil, encouraging the use of crouching or prone stances and firing in bursts.
+** The weapon's fire rate can be toggled between 630, 760, and 900 rounds per minute.
+*** A lower fire rate reduces recoil and conserves ammunition at the cost of overall damage output.
+*** A higher fire rate maximizes damage output, but makes the weapon harder to control.
+* The MG-43's poor ergonomics makes it difficult to track or swap between targets at close range, making it a good candidate to be paired with the [[Armor Passives#Peak Physique|Peak Physique]] armor passive.
+* Another drawback of the MG-43 is its stationary reload, which can leave Helldivers vulnerable.
+** This can be partly mitigated by reloading before the current magazine is empty, shortening the reload time by 0.7 seconds.
+** The weapon's staged reload allows Helldivers to reposition, and then resume the process once safe.
+
+== Applicable Ship Modules ==
+The following [[Ship Modules|Ship Modules]] affect the MG-43 Machine Gun:
+
+{| class="wikitable"
+|+
+! Department
+! Ship Module
+! Effect
+|-
+! rowspan="4" | '''Patriotic <br>Administration <br>Center'''
+| [[Donation Access License]] || '''Support Weapons''' deploy with the maximum number of carriable magazines.
+|-
+| [[Streamlined Request Process]] ||  Decreases '''Support Weapon''' stratagem cooldown by '''10%'''.
+|-
+| [[Superior Packing Methodology]] || '''Resupply''' '''stratagem''' boxes refill '''Support Weapons''' with the maximum number of carriable magazines.
+|-
+| [[Payroll Management System]] || Reduces reload time for all support weapons by '''10%'''.
+|-
+! '''Bridge'''
+|[[Morale Augmentation]] || Reduces cooldown time for '''all Stratagems''' by '''5%'''.
+|-
+! '''Engineering <br>Bay'''
+|[[Streamlined Launch Process]] || All '''Support Weapon''' stratagems launch immediately once called in, reducing overall deployment time.
+|}
+
+== Media ==
+<gallery mode="nolines" widths="256" heights="256">
+File:MG-43 Machine Gun WW.png|Weapon Wheel
+File:Machine Gun Preview Video.mp4|Tutorial Video Demonstrating Use of the MG-43 Machine Gun
+MachineGun.JPG|Image of MG-43 From Tutorial Video
+MG-43 Stratagem Pod.png|The MG-43 in a pod
+File:MG-43 Machine Gun 3rd.png|Aiming, Third-Person
+File:MG-43 Machine Gun 1st.png|Aiming, First-Person
+File:MG-43 Machine Gun 3rd Reloads.gif|Reloading, Third-Person (full and partial)
+File:MG-43 Machine Gun 1st Reloads.gif|Reloading, First-Person (full and partial, looking down)
+</gallery>
+
+== Change History ==
+{{Change History Head}}{{Change History Update|1.005.000|changes=Fix
+* Fixed the red glow that would happen if the player would empty one or two magazines with MG-206 Heavy Machine Gun, M-105 Stalwart or MG-43 Machine Gun}}{{Change History Update|1.001.201|changes=
+Fix
+* The MG-43 Machine Gun now has the 0.5 second shorter reload duration from 1.000.400 properly implemented.
+** The lowered value is actually a decrease from 5 seconds to 4.5 seconds.
+}}
+{{Change History Update|1.001.104|changes=
+Changes
+* Magazine capacity increased from 150 to 175
+* Starting spare magazines increased from 1 to 2
+}}
+{{Change History Update|1.001.100|changes=
+Change
+* Stagger force increased from 15 to 20.
+}}
+{{Change History Update|1.000.400|changes=
+Changes
+* Decreased reload time from 4 seconds to 3.5 seconds.
+** This buff was not implemented in-game, and was later correctly implemented in 1.001.201.
+* Increased max amount of Magazines from 3 to 4.
+* Increased projectile damage from 80 to 90.
+* Increased projectile damage against durable* body parts from 7.5% to 25%.
+** Durable damage increased from 7 to 23.
+}}
+
+[[Category:Stratagems]]
+[[Category:Patriotic Administration Center Stratagems]]
+[[Category:Weapons|3]]
+[[Category:Support Weapons]]
+[[Category:Starter Loadout]]
+
+{{Nav Stratagem}}
+__FORCETOC__
