@@ -4,8 +4,18 @@
 import { PHASE } from './game.js';
 import { CONFIG } from './config.js';
 
-const GLYPHS = { up: '↑', down: '↓', left: '←', right: '→' };
+// Directions are drawn as one block-arrow path rotated per direction, rather
+// than as text glyphs: font arrows render thin and vary by fallback font, which
+// made them hard to read against the cabinet at a glance. The shape copies the
+// in-game one - a broad head over a short stem, no box around it.
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const ARROW_PATH = 'M50 4 L94 56 L65 56 L65 92 L35 92 L35 56 L6 56 Z';
+const ROTATION = { up: 0, right: 90, down: 180, left: 270 };
 const CRITICAL_FRACTION = 0.25;
+
+// How many stratagems past the current one the queue previews. The round can
+// hold fewer than this, in which case the row simply ends early.
+const QUEUE_PREVIEW = 10;
 
 export function queryElements() {
   const id = (name) => document.getElementById(name);
@@ -21,7 +31,7 @@ export function queryElements() {
     score: id('hud-score'),
     high: id('hud-high'),
     timerBar: id('timer-bar'),
-    icon: id('stratagem-icon'),
+    queue: id('stratagem-queue'),
     name: id('stratagem-name'),
     category: id('stratagem-category'),
     arrowRow: id('arrow-row'),
@@ -57,37 +67,66 @@ function renderArrows(elements, stratagem, progress) {
   elements.arrowRow.replaceChildren(
     ...stratagem.code.map((direction, i) => {
       const cell = document.createElement('div');
-      cell.className = i < progress ? 'arrow done' : 'arrow';
-      cell.textContent = GLYPHS[direction];
+      cell.className = 'arrow';
+      if (i < progress) cell.classList.add('done');
+      else if (i === progress) cell.classList.add('current');
+      cell.append(arrowGlyph(direction));
       return cell;
     })
   );
 }
 
-// Tracks the icon URL currently loaded (or attempted) into the <img>, and
-// whether that attempt failed, so a same-stratagem re-paint neither restarts
-// the image load nor un-hides an icon that already 404'd.
-let iconState = { url: null, failed: false };
+function arrowGlyph(direction) {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 100 100');
+  svg.setAttribute('class', 'arrow-glyph');
+  svg.setAttribute('aria-hidden', 'true');
 
-function renderIcon(elements, stratagem) {
-  if (!stratagem.icon) {
-    iconState = { url: null, failed: false };
-    elements.icon.hidden = true;
-    return;
-  }
+  const path = document.createElementNS(SVG_NS, 'path');
+  path.setAttribute('d', ARROW_PATH);
+  path.setAttribute('fill', 'currentColor');
+  path.setAttribute('transform', `rotate(${ROTATION[direction]} 50 50)`);
 
-  if (iconState.url !== stratagem.icon) {
-    iconState = { url: stratagem.icon, failed: false };
-    elements.icon.alt = '';
-    // A dead wiki URL must not leave a broken-image box on screen.
-    elements.icon.onerror = () => {
-      iconState.failed = true;
-      elements.icon.hidden = true;
-    };
-    elements.icon.src = stratagem.icon;
-  }
+  svg.append(path);
+  return svg;
+}
 
-  elements.icon.hidden = iconState.failed;
+// The queue shows the stratagem being entered plus the ones lined up behind it.
+// Rebuilding it means re-creating up to eleven <img> elements, so it is rebuilt
+// only when the round or the position within it actually changes - never on a
+// plain re-paint.
+let queueCache = { sequence: null, index: null };
+
+function renderQueue(elements, sequence, index) {
+  if (queueCache.sequence === sequence && queueCache.index === index) return;
+  queueCache = { sequence, index };
+
+  elements.queue.replaceChildren(
+    ...sequence
+      .slice(index, index + QUEUE_PREVIEW + 1)
+      .map((stratagem, offset) => queueIcon(stratagem, offset === 0))
+  );
+}
+
+function queueIcon(stratagem, isCurrent) {
+  const cell = document.createElement('div');
+  cell.className = isCurrent ? 'queue-icon current' : 'queue-icon';
+  cell.title = stratagem.name;
+
+  if (!stratagem.icon) return cell;
+
+  const img = document.createElement('img');
+  img.alt = '';
+  // Every icon is a separate wiki URL, so any one of them can 404. A dead URL
+  // hides its own image and leaves the empty cell standing, which keeps the
+  // rest of the queue in place instead of shifting it left.
+  img.onerror = () => {
+    img.hidden = true;
+  };
+  img.src = stratagem.icon;
+
+  cell.append(img);
+  return cell;
 }
 
 function renderScoreTable(elements, scores) {
@@ -125,7 +164,7 @@ export function render(state, elements, { scores = [], syncMessage = null, syncE
     if (current) {
       elements.name.textContent = current.name;
       elements.category.textContent = current.category ?? '';
-      renderIcon(elements, current);
+      renderQueue(elements, state.sequence, state.index);
       renderArrows(elements, current, state.progress);
       elements.queueCount.textContent = `${state.index + 1} / ${state.sequence.length}`;
     }

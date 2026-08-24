@@ -13,6 +13,8 @@ python -m http.server 8000
 # then open http://localhost:8000
 ```
 
+On Windows, double-clicking `play.bat` does both steps for you.
+
 Arrow keys or WASD to enter codes. Enter to start, advance, and restart.
 
 ## Rules

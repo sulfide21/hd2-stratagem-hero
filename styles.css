@@ -38,17 +38,7 @@ body {
   overflow: hidden;
 }
 
-.scanlines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0 2px,
-    rgba(0, 0, 0, 0.28) 2px 4px
-  );
-  z-index: 5;
-}
+
 
 .hud {
   display: grid;
@@ -61,6 +51,8 @@ body {
 }
 
 .hud-cell { display: flex; flex-direction: column; align-items: center; }
+.hud-cell:first-child { align-items: flex-start; }
+.hud-cell:last-child { align-items: flex-end; }
 .hud-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.2em; }
 
 .screen {
@@ -91,25 +83,72 @@ kbd {
 .timer-bar { height: 100%; width: 100%; background: var(--yellow); transition: width 80ms linear; }
 .timer-bar.critical { background: var(--red); }
 
-.stratagem { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
-.stratagem-icon { width: 88px; height: 88px; background: var(--yellow); padding: 6px; }
-.stratagem-name { margin: 0; font-size: clamp(1.25rem, 4vw, 2.25rem); color: var(--yellow); }
-.stratagem-category { margin: 0; color: var(--muted); font-size: 0.75rem; letter-spacing: 0.2em; }
+/* The playing screen is one left-aligned column: the queue row sets the width,
+   and the name bar, arrows and timer line up underneath it. */
+.stage { width: 100%; display: flex; flex-direction: column; gap: 0.8rem; }
 
-.arrow-row { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
-
-.arrow {
-  width: 54px;
-  height: 54px;
-  display: grid;
-  place-items: center;
-  border: 2px solid var(--yellow-dim);
-  color: var(--yellow-dim);
-  font-size: 1.6rem;
-  line-height: 1;
+/* Current stratagem first and enlarged, the ones lined up behind it trailing
+   off to the right at a size that reads as "later". */
+.stratagem-queue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 108px;
 }
 
-.arrow.done { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+/* Sized with clamp so a full queue of eleven still fits inside the cabinet on
+   a narrow window instead of overflowing it. */
+.queue-icon {
+  flex: 0 0 auto;
+  width: clamp(40px, 5.5vw, 58px);
+  height: clamp(40px, 5.5vw, 58px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.queue-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.queue-icon img[hidden] { display: none; }
+
+.queue-icon.current {
+  width: clamp(76px, 10vw, 108px);
+  height: clamp(76px, 10vw, 108px);
+  background: var(--yellow);
+  border: 3px solid var(--yellow);
+  padding: 4px;
+}
+
+.stratagem-name {
+  margin: 0;
+  background: var(--yellow);
+  color: var(--black);
+  font-size: clamp(1rem, 2.8vw, 1.6rem);
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+}
+
+.stratagem-category { margin: 0; color: var(--muted); font-size: 0.75rem; letter-spacing: 0.2em; }
+
+/* Arrows are bare glyphs packed tightly, as in the game itself - no boxes.
+   Both states stay full brightness so the whole code is readable at a glance:
+   progress is shown by hue (white still to press, yellow already entered),
+   never by dimming. */
+.arrow-row { display: flex; gap: 0.2rem; flex-wrap: wrap; justify-content: center; }
+
+.arrow {
+  width: clamp(44px, 7vw, 62px);
+  height: clamp(44px, 7vw, 62px);
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+
+.arrow-glyph { width: 100%; height: 100%; display: block; }
+
+.arrow.current { transform: scale(1.12); }
+
+.arrow.done { color: var(--yellow); filter: drop-shadow(0 0 5px rgba(255, 226, 10, 0.55)); }
 
 .queue-count { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.2em; }
 
@@ -147,7 +186,7 @@ kbd {
 
 /* Error feedback: a red shake on the whole cabinet. */
 .cabinet.wrong { animation: shake 180ms ease-in-out; }
-.cabinet.wrong .arrow { border-color: var(--red); color: var(--red); }
+.cabinet.wrong .arrow { color: var(--red); filter: none; }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }

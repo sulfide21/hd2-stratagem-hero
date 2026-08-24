@@ -18,8 +18,8 @@
 
       <header class="hud">
         <div class="hud-cell"><span class="hud-label">Round</span><span id="hud-round">1</span></div>
-        <div class="hud-cell"><span class="hud-label">Score</span><span id="hud-score">0</span></div>
         <div class="hud-cell"><span class="hud-label">High</span><span id="hud-high">0</span></div>
+        <div class="hud-cell"><span class="hud-label">Score</span><span id="hud-score">0</span></div>
       </header>
 
       <section id="screen-title" class="screen">
@@ -34,16 +34,14 @@
       </section>
 
       <section id="screen-playing" class="screen" hidden>
-        <div class="timer-track"><div id="timer-bar" class="timer-bar"></div></div>
-
-        <div class="stratagem">
-          <img id="stratagem-icon" class="stratagem-icon" alt="" hidden />
+        <div class="stage">
+          <div id="stratagem-queue" class="stratagem-queue"></div>
           <h2 id="stratagem-name" class="stratagem-name"></h2>
           <p id="stratagem-category" class="stratagem-category"></p>
+          <div id="arrow-row" class="arrow-row"></div>
+          <div class="timer-track"><div id="timer-bar" class="timer-bar"></div></div>
+          <p id="queue-count" class="queue-count"></p>
         </div>
-
-        <div id="arrow-row" class="arrow-row"></div>
-        <p id="queue-count" class="queue-count"></p>
       </section>
 
       <section id="screen-round-complete" class="screen" hidden>
